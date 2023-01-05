@@ -26,16 +26,11 @@ namespace mahanga.Core
 
         public string CheckExeLocation()
         {
-            var exelocation = Assembly.GetEntryAssembly().Location;
-            return exelocation;
-        }
+            DirectoryInfo dirInfo = new DirectoryInfo("./");
 
-        public string GetExeLocation(string location)
-        {
-            var directory = Path.GetDirectoryName(location);
-            return directory;
+            return dirInfo.FullName;
         }
-
+        
         //  ENUMERATION OPTIONS
         public EnumerationOptions EnumOptions()
         {
@@ -145,20 +140,13 @@ namespace mahanga.Core
             Console.BackgroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color);
         }
 
-        public void CreateFolders(string exe, string folderName)
+        public void CreateFolders(string results, string folderName)
         {
-            var scriptFolder = _gc.scriptsFolder + _gc.toolResultsPath + folderName;
-            var exefolder = exe + folderName;
+            var resultsFolder = Path.Combine(results, folderName);
 
-            if (Directory.Exists(exefolder) == false)
+            if (Directory.Exists(resultsFolder) == false)
             {
-                Directory.CreateDirectory(exefolder);
-            }
-
-            // if result folder not contains needed folder just create it
-            if (Directory.Exists(scriptFolder) == false)
-            {
-                Directory.CreateDirectory(scriptFolder);
+                Directory.CreateDirectory(resultsFolder);
             }
         }
 

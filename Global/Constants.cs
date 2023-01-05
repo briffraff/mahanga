@@ -29,7 +29,7 @@ namespace mahanga.Global
         public string fullRangePSBfiles = @"N:\";
         public string temp = @"K:\TEMP PSDs"; // temp
         public string scriptsFolder = @"M:\Z_Software Assets\3ds Max\BorakaScriptPack_vol1\PMTools";
-        public string toolResultsPath = @"\MaHANGA\results\";
+        public string toolResultsPath = @"Results";
         public string pathRootMWEQ = @"N:\Garments"; // the root folder for Men-Women-Equipment Garments
         public string pathRootMA = @"N:\Garments MA"; // the root folder to Maternity Garments
         public string pathRootPlusSize = @"N:\Garments PS"; // the root folder for PlusSize Garments

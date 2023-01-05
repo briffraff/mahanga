@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using mahanga.Core.Interface;
@@ -34,10 +36,10 @@ namespace mahanga.Core
             var categoriesFTWInfo = new Dictionary<string, List<string>>();
 
             string exeLocation = _service.CheckExeLocation();
-            string exeTemp = _service.GetExeLocation(exeLocation) + "\\";
-
+            string resultsLocation = exeLocation + _gc.toolResultsPath;
+            
             _service.CheckAndResetWindowSize();
-
+            
 
             if (Console.BackgroundColor == ConsoleColor.Black)
             {
@@ -61,7 +63,7 @@ namespace mahanga.Core
             Console.WriteLine("4: [jpeg]");
             var fileType = Console.ReadLine();
             var folderName = _service.chooseTypeToWorkWith(fileType);
-            _service.CreateFolders(exeTemp, folderName);
+            _service.CreateFolders(resultsLocation, folderName);
             fileType = "*." + folderName;
 
             _service.ChangeTextColor("DarkRed");
@@ -301,17 +303,17 @@ namespace mahanga.Core
 
             //// Print to file
             var typeElement = folderName == "psd" ? $"[{folderName},psb]" : $"[{folderName}]";
-
-            var toSaveApparelZeroes = exeTemp + folderName + "\\" + $"[apparel]_000_{typeElement}.txt";
+            
+            var toSaveApparelZeroes = resultsLocation + "\\" + folderName + "\\" + $"[apparel]_000_{typeElement}.txt";
             StreamWriter sw = new StreamWriter(toSaveApparelZeroes);
 
-            var toSaveApparelColors = exeTemp + folderName + "\\" + $"[apparel]_colors_{typeElement}.txt";
+            var toSaveApparelColors = resultsLocation + "\\" + folderName + "\\" + $"[apparel]_colors_{typeElement}.txt";
             StreamWriter swColors = new StreamWriter(toSaveApparelColors);
 
-            var toSaveFootwearZeroes = exeTemp + folderName + "\\" + $"[footwear]_000_{typeElement}.txt";
+            var toSaveFootwearZeroes = resultsLocation + "\\" + folderName + "\\" + $"[footwear]_000_{typeElement}.txt";
             StreamWriter swFootwear = new StreamWriter(toSaveFootwearZeroes);
 
-            var toSaveFootwearColors = exeTemp + folderName + "\\" + $"[footwear]_colors_{typeElement}.txt";
+            var toSaveFootwearColors = resultsLocation + "\\" + folderName + "\\" + $"[footwear]_colors_{typeElement}.txt";
             StreamWriter swFootwearColors = new StreamWriter(toSaveFootwearColors);
 
             sw.WriteLine(resultZeros.ToString());
@@ -332,16 +334,11 @@ namespace mahanga.Core
             ////---------------- Print to file ends here !!!
 
 
-            ////    TRANSFER resultZeros files to script folder
-            var source = $"{exeTemp}{folderName}\\";
-            var destination = $"{toolResultsPath}{folderName}\\";
-            _service.TransferResultFilesToFolder(source, destination , typeElement);
-
             _print.NewLine();
             _service.ChangeTextColor("Red");
             Console.WriteLine($"results here -> ");
             _service.ChangeTextColor("White");
-            Console.Write($"{toolResultsPath}");
+            Console.Write($"{resultsLocation}");
             _service.ChangeTextColor("Red");
             Console.Write(" <-");
             ////-------------------TRANSFER ENDS HERE !!!

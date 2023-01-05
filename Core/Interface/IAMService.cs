@@ -4,6 +4,5 @@
     {
         void CheckAndResetWindowSize();
         string CheckExeLocation();
-        string GetExeLocation(string location);
     }
 }
